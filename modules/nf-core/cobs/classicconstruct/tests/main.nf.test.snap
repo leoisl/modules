@@ -1,0 +1,23 @@
+{
+    "versions": {
+        "content": [
+            [
+                "versions.yml:md5,085a4365d164cf1a6d96c4deed57012a"
+            ]
+        ],
+        "timestamp": "2023-12-06T18:53:19.374652"
+    },
+    "index": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "test"
+                    },
+                    "index.cobs_classic:md5,1745dca38a763f0b6a6e4943d53f8b6a"
+                ]
+            ]
+        ],
+        "timestamp": "2023-12-06T18:53:19.347747"
+    }
+}
