@@ -1,0 +1,43 @@
+nextflow_process {
+    name "Test Process COBS_QUERY"
+    script "../main.nf"
+    process "COBS_QUERY"
+    config "./nextflow.config"
+
+    tag "modules"
+    tag "modules_nfcore"
+    tag "cobs"
+    tag "cobs/query"
+
+    test("sarscov2 - reads - fastq") {
+        setup {
+            run("COBS_CLASSICCONSTRUCT") {
+                script "../../classicconstruct/main.nf"
+                process {
+                    """
+                    input[0] = [
+                        [ id:'test'], // meta map
+                        file(params.test_data['sarscov2']['genome']['genome_fasta'], checkIfExists: true)
+                    ]
+                    """
+                }
+            }
+        }
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test'], // meta map,
+                    file(params.test_data['sarscov2']['illumina']['test_1_fastq_gz'], checkIfExists: true)
+                ]
+                input[1] = COBS_CLASSICCONSTRUCT.out.index
+                """
+            }
+        }
+        then {
+            assertAll(
+                { assert process.success },
+            )
+        }
+    }
+}
