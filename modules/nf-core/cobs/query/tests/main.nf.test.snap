@@ -1,21 +1,23 @@
 {
-    "sarscov2 - reads - fastq": {
+    "versions": {
         "content": [
-            {
-                "0": [
-                    
-                ],
-                "1": [
-                    
-                ],
-                "matches": [
-                    
-                ],
-                "versions": [
-                    
-                ]
-            }
+            [
+                "versions.yml:md5,2cb8ef1da02fb9c80aa4129728f92ad0"
+            ]
         ],
-        "timestamp": "2023-12-06T22:16:12.254824"
+        "timestamp": "2023-12-08T20:34:48.33528"
+    },
+    "matches": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "test"
+                    },
+                    "matches.gz:md5,d72afca994827384c775a8e3738f86bc"
+                ]
+            ]
+        ],
+        "timestamp": "2023-12-08T20:34:48.319928"
     }
 }

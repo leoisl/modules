@@ -37,6 +37,10 @@ nextflow_process {
         then {
             assertAll(
                 { assert process.success },
+                { assert process.out.matches != null },
+                { assert process.out.matches.get(0).get(1) ==~ ".*/matches.gz" },
+                { assert snapshot(process.out.matches).match("matches")},
+                { assert snapshot(process.out.versions).match("versions") }
             )
         }
     }

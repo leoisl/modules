@@ -11,27 +11,35 @@ tools:
   - "cobs":
       description: "Compact Bit-Sliced Signature Index (for Genomic k-Mer Data or q-Grams)"
       homepage: "https://panthema.net/cobs"
-      documentation: "None"
+      documentation: "https://github.com/iqbal-lab-org/cobs"
       tool_dev_url: "https://github.com/iqbal-lab-org/cobs"
-      doi: "https://doi.org/10.1007/978-3-030-32686-9_21"
+      doi: "10.1007/978-3-030-32686-9_21"
       licence: ['MIT']
 
 input:
   - meta:
       type: map
       description: |
-        Groovy Map containing sample information
+        Groovy Map containing query information
         e.g. `[ id:'sample1', single_end:false ]`
-
-  - cobs_index:
-      type: file
-      description: The COBS index
-      pattern: "*.{cobs_classic,cobs_classic.gz,cobs_classic.xz,cobs_compact,cobs_compact.gz,cobs_compact.xz}"
 
   - query:
       type: file
       description: The file to be queried
       pattern: "*.{fasta.gz,fastq.gz}"
+
+  - meta_index:
+      type: map
+      description: |
+        Groovy Map containing index information
+        e.g. `[ id:'sample1', single_end:false ]`
+
+
+  - index:
+      type: file
+      description: The COBS index
+      pattern: "*.{cobs_classic,cobs_classic.gz,cobs_classic.xz,cobs_compact,cobs_compact.gz,cobs_compact.xz}"
+
 
 output:
   - meta:

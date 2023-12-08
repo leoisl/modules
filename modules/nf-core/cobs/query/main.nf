@@ -3,13 +3,13 @@ process COBS_QUERY {
     label 'process_low'
 
     conda "${moduleDir}/environment.yml"
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/cobs:0.2.1--hd03093a_0':
-        'biocontainers/cobs:0.2.1--hd03093a_0' }"
+    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://depot.galaxyproject.org/singularity/cobs:0.3.0--hdcf5f25_0' :
+        'biocontainers/cobs:0.3.0--hdcf5f25_0'}"
 
     input:
-    tuple val(meta), path(query)
-    tuple val(meta2), path(index)
+    tuple val(meta),  path(query)
+    tuple val(meta_index), path(index)
 
     output:
     tuple val(meta), path("matches.gz"), emit: matches
@@ -36,12 +36,16 @@ process COBS_QUERY {
         decompress_tool = "xz"
         get_index_size_command = "index_size=\$(xz --list --robot "$index" | grep file | awk '{print \\\$5}')"
     }
+    def command =
+        """
+            set -euo pipefail
+        """
 
-    def command = ""
+    // run COBS
     if (index_is_gzip_compressed || index_is_xz_compressed) {
         if (should_load_the_whole_index_into_RAM) {
-            command += get_index_size_command
             // streams compressed index to COBS
+            command += get_index_size_command
             command += """
                             cobs \\
                                 query \\
