@@ -81,10 +81,10 @@ process COBS_QUERY {
     command +=
         """ | gzip > matches.gz
 
-            cat <<-END_VERSIONS > versions.yml
-            "${task.process}":
-                cobs: \\\$( cobs version 2>&1 | awk '{print \\\$3}' )
-            END_VERSIONS
+                cat <<-END_VERSIONS > versions.yml
+                "${task.process}":
+                    cobs: \$(cobs version 2>&1 | awk '{print \$3}')
+                END_VERSIONS
         """
     command
 }
