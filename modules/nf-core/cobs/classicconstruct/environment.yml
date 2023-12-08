@@ -6,4 +6,4 @@ channels:
   - bioconda
   - defaults
 dependencies:
-  - "bioconda::cobs=0.2.1"
+  - "bioconda::cobs=0.3.0"

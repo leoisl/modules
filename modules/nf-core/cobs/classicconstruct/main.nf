@@ -4,8 +4,8 @@ process COBS_CLASSICCONSTRUCT {
 
     conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/cobs:0.2.1--hd03093a_0' :
-        'biocontainers/cobs:0.2.1--hd03093a_0'}"
+        'https://depot.galaxyproject.org/singularity/cobs:0.3.0--hdcf5f25_0' :
+        'biocontainers/cobs:0.3.0--hdcf5f25_0'}"
 
     input:
     tuple val(meta), path(input)
