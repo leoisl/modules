@@ -31,10 +31,10 @@ process COBS_QUERY {
 
     if (index_is_gzip_compressed) {
         decompress_tool = "gzip"
-        get_index_size_command = "index_size=\$(gzip --list "$index" | tail -n1 | awk '{print \\\$2}')"
+        get_index_size_command = "index_size=\$(gzip --list $index | tail -n1 | awk '{print \$2}')"
     } else if (index_is_xz_compressed) {
         decompress_tool = "xz"
-        get_index_size_command = "index_size=\$(xz --list --robot "$index" | grep file | awk '{print \\\$5}')"
+        get_index_size_command = "index_size=\$(xz --list --robot $index | grep file | awk '{print \$5}')"
     }
     def command =
         """
@@ -42,6 +42,8 @@ process COBS_QUERY {
         """
 
     // run COBS
+    def decompressed_index = ""
+    def should_delete_decompressed_index = false
     if (index_is_gzip_compressed || index_is_xz_compressed) {
         if (should_load_the_whole_index_into_RAM) {
             // streams compressed index to COBS
@@ -57,7 +59,8 @@ process COBS_QUERY {
                        """
         } else {
             // decompresses compressed index to disk and mmap it
-            def decompressed_index = index.toString().replaceAll(".{g,x}z\$", "")
+            decompressed_index = index.toString().replaceAll(".[gx]z\$", "")
+            should_delete_decompressed_index = true
             command += """
                             ${decompress_tool} --decompress --stdout "${index}" > "${decompressed_index}"
 
@@ -67,8 +70,6 @@ process COBS_QUERY {
                                 -T $task.cpus \\
                                 -i $decompressed_index \\
                                 -f <(zcat $query) \\
-
-                            rm "${decompressed_index}"
                        """
         }
     }else {
@@ -82,9 +83,15 @@ process COBS_QUERY {
                             -f <(zcat $query) \\
                    """
     }
-    command +=
-        """ | gzip > matches.gz
+    command += " | gzip > matches.gz"
 
+    if (should_delete_decompressed_index) {
+        command += """
+                        rm -v "${decompressed_index}"
+                   """
+    }
+    command +=
+        """
                 cat <<-END_VERSIONS > versions.yml
                 "${task.process}":
                     cobs: \$(cobs version 2>&1 | awk '{print \$3}')

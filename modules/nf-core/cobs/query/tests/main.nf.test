@@ -9,7 +9,7 @@ nextflow_process {
     tag "cobs"
     tag "cobs/query"
 
-    test("sarscov2 - reads - fastq") {
+    test("sarscov2 - classic - no compression - reads - fastq") {
         setup {
             run("COBS_CLASSICCONSTRUCT") {
                 script "../../classicconstruct/main.nf"
@@ -31,6 +31,130 @@ nextflow_process {
                     file(params.test_data['sarscov2']['illumina']['test_1_fastq_gz'], checkIfExists: true)
                 ]
                 input[1] = COBS_CLASSICCONSTRUCT.out.index
+                """
+            }
+        }
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.matches != null },
+                { assert process.out.matches.get(0).get(1) ==~ ".*/matches.gz" },
+                { assert snapshot(process.out.matches).match("matches")},
+                { assert snapshot(process.out.versions).match("versions") }
+            )
+        }
+    }
+
+    test("sarscov2 - compact - no compression - reads - fastq") {
+        setup {
+            run("COBS_COMPACTCONSTRUCT") {
+                script "../../compactconstruct/main.nf"
+                process {
+                    """
+                    input[0] = [
+                        [ id:'test'], // meta map
+                        file(params.test_data['sarscov2']['genome']['genome_fasta'], checkIfExists: true)
+                    ]
+                    """
+                }
+            }
+        }
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test'], // meta map,
+                    file(params.test_data['sarscov2']['illumina']['test_1_fastq_gz'], checkIfExists: true)
+                ]
+                input[1] = COBS_COMPACTCONSTRUCT.out.index
+                """
+            }
+        }
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.matches != null },
+                { assert process.out.matches.get(0).get(1) ==~ ".*/matches.gz" },
+                { assert snapshot(process.out.matches).match("matches")},
+                { assert snapshot(process.out.versions).match("versions") }
+            )
+        }
+    }
+
+    test("sarscov2 - classic - xz compression - reads - fastq") {
+        setup {
+            run("COBS_CLASSICCONSTRUCT") {
+                script "../../classicconstruct/main.nf"
+                process {
+                    """
+                    input[0] = [
+                        [ id:'test'], // meta map
+                        file(params.test_data['sarscov2']['genome']['genome_fasta'], checkIfExists: true)
+                    ]
+                    """
+                }
+            }
+            run("XZ_COMPRESS") {
+                script "../../../xz/compress/main.nf"
+                process {
+                    """
+                    input[0] = COBS_CLASSICCONSTRUCT.out.index
+                    """
+                }
+            }
+        }
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test'], // meta map,
+                    file(params.test_data['sarscov2']['illumina']['test_1_fastq_gz'], checkIfExists: true)
+                ]
+                input[1] = XZ_COMPRESS.out.archive
+                """
+            }
+        }
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.matches != null },
+                { assert process.out.matches.get(0).get(1) ==~ ".*/matches.gz" },
+                { assert snapshot(process.out.matches).match("matches")},
+                { assert snapshot(process.out.versions).match("versions") }
+            )
+        }
+    }
+
+    test("sarscov2 - compact - xz compression - reads - fastq") {
+        setup {
+            run("COBS_COMPACTCONSTRUCT") {
+                script "../../compactconstruct/main.nf"
+                process {
+                    """
+                    input[0] = [
+                        [ id:'test'], // meta map
+                        file(params.test_data['sarscov2']['genome']['genome_fasta'], checkIfExists: true)
+                    ]
+                    """
+                }
+            }
+            run("XZ_COMPRESS") {
+                script "../../../xz/compress/main.nf"
+                process {
+                    """
+                    input[0] = COBS_COMPACTCONSTRUCT.out.index
+                    """
+                }
+            }
+        }
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test'], // meta map,
+                    file(params.test_data['sarscov2']['illumina']['test_1_fastq_gz'], checkIfExists: true)
+                ]
+                input[1] = XZ_COMPRESS.out.archive
                 """
             }
         }
