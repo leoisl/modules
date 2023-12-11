@@ -26,7 +26,7 @@
                 ]
             }
         ],
-        "timestamp": "2023-12-11T18:54:21.244378"
+        "timestamp": "2023-12-11T19:24:20.20881"
     },
     "sarscov2 - compact - xz compression - reads - fastq": {
         "content": [
@@ -55,7 +55,7 @@
                 ]
             }
         ],
-        "timestamp": "2023-12-11T18:54:32.041547"
+        "timestamp": "2023-12-11T19:24:32.45983"
     },
     "sarscov2 - classic - no compression - reads - fastq": {
         "content": [
@@ -84,7 +84,7 @@
                 ]
             }
         ],
-        "timestamp": "2023-12-11T18:53:51.049153"
+        "timestamp": "2023-12-11T19:23:49.69497"
     },
     "sarscov2 - compact - no compression - reads - fastq": {
         "content": [
@@ -113,6 +113,6 @@
                 ]
             }
         ],
-        "timestamp": "2023-12-11T18:54:10.549601"
+        "timestamp": "2023-12-11T19:24:09.269863"
     }
 }
