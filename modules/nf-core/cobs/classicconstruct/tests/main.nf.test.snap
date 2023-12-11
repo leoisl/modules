@@ -26,35 +26,6 @@
                 ]
             }
         ],
-        "timestamp": "2023-12-11T16:54:26.108084"
-    },
-    "sarscov2 - genome - fasta - stub": {
-        "content": [
-            {
-                "0": [
-                    [
-                        {
-                            "id": "test"
-                        },
-                        "test.index.cobs_classic:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ]
-                ],
-                "1": [
-                    "versions.yml:md5,c7f4addaabb22c98031762d886b4e9fa"
-                ],
-                "index": [
-                    [
-                        {
-                            "id": "test"
-                        },
-                        "test.index.cobs_classic:md5,d41d8cd98f00b204e9800998ecf8427e"
-                    ]
-                ],
-                "versions": [
-                    "versions.yml:md5,c7f4addaabb22c98031762d886b4e9fa"
-                ]
-            }
-        ],
-        "timestamp": "2023-12-11T16:54:33.693174"
+        "timestamp": "2023-12-11T19:16:56.911918"
     }
 }
