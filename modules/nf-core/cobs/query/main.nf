@@ -12,7 +12,7 @@ process COBS_QUERY {
     tuple val(meta_index), path(index)
 
     output:
-    tuple val(meta), path("matches.gz"), emit: matches
+    tuple val(meta), path("${matches}"), emit: matches
     path "versions.yml"                , emit: versions
 
     when:
@@ -23,6 +23,8 @@ process COBS_QUERY {
 
     // variables setup
     def args = task.ext.args ?: ''
+    def prefix = task.ext.prefix ?: "${meta.id}-${meta_index.id}"
+    matches = "${prefix}.matches.gz"
     def should_load_the_whole_index_into_RAM = args.contains("--load-complete")
     def index_is_gzip_compressed = index.toString().endsWith(".gz")
     def index_is_xz_compressed = index.toString().endsWith(".xz")
@@ -83,7 +85,7 @@ process COBS_QUERY {
                             -f <(zcat $query) \\
                    """
     }
-    command += " | gzip > matches.gz"
+    command += " | gzip > ${matches}"
 
     if (should_delete_decompressed_index) {
         command += """
@@ -97,5 +99,19 @@ process COBS_QUERY {
                     cobs: \$(cobs version 2>&1 | awk '{print \$3}')
                 END_VERSIONS
         """
-    command
+    """
+    ${command}
+    """
+
+    stub:
+    def prefix = task.ext.prefix ?: "${meta.id}-${meta_index.id}"
+    matches = "${prefix}.matches.gz"
+    """
+    gzip </dev/null >${matches}
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        cobs: \$(cobs version 2>&1 | awk '{print \$3}')
+    END_VERSIONS
+    """
 }

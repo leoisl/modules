@@ -1,23 +1,118 @@
 {
-    "versions": {
+    "sarscov2 - classic - xz compression - reads - fastq": {
         "content": [
-            [
-                "versions.yml:md5,bcff4ee09e1eab79e92a478301d31869"
-            ]
-        ],
-        "timestamp": "2023-12-09T11:59:55.328031"
-    },
-    "matches": {
-        "content": [
-            [
-                [
-                    {
-                        "id": "test"
-                    },
-                    "matches.gz:md5,d72afca994827384c775a8e3738f86bc"
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test-test.matches.gz:md5,fa27bd4631ec5ea8585df63c260df41b"
+                    ]
+                ],
+                "1": [
+                    "versions.yml:md5,bcff4ee09e1eab79e92a478301d31869"
+                ],
+                "matches": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test-test.matches.gz:md5,fa27bd4631ec5ea8585df63c260df41b"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,bcff4ee09e1eab79e92a478301d31869"
                 ]
-            ]
+            }
         ],
-        "timestamp": "2023-12-08T20:34:48.319928"
+        "timestamp": "2023-12-11T18:54:21.244378"
+    },
+    "sarscov2 - compact - xz compression - reads - fastq": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test-test.matches.gz:md5,fa27bd4631ec5ea8585df63c260df41b"
+                    ]
+                ],
+                "1": [
+                    "versions.yml:md5,bcff4ee09e1eab79e92a478301d31869"
+                ],
+                "matches": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test-test.matches.gz:md5,fa27bd4631ec5ea8585df63c260df41b"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,bcff4ee09e1eab79e92a478301d31869"
+                ]
+            }
+        ],
+        "timestamp": "2023-12-11T18:54:32.041547"
+    },
+    "sarscov2 - classic - no compression - reads - fastq": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test-test.matches.gz:md5,fa27bd4631ec5ea8585df63c260df41b"
+                    ]
+                ],
+                "1": [
+                    "versions.yml:md5,bcff4ee09e1eab79e92a478301d31869"
+                ],
+                "matches": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test-test.matches.gz:md5,fa27bd4631ec5ea8585df63c260df41b"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,bcff4ee09e1eab79e92a478301d31869"
+                ]
+            }
+        ],
+        "timestamp": "2023-12-11T18:53:51.049153"
+    },
+    "sarscov2 - compact - no compression - reads - fastq": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test-test.matches.gz:md5,fa27bd4631ec5ea8585df63c260df41b"
+                    ]
+                ],
+                "1": [
+                    "versions.yml:md5,bcff4ee09e1eab79e92a478301d31869"
+                ],
+                "matches": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test-test.matches.gz:md5,fa27bd4631ec5ea8585df63c260df41b"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,bcff4ee09e1eab79e92a478301d31869"
+                ]
+            }
+        ],
+        "timestamp": "2023-12-11T18:54:10.549601"
     }
 }

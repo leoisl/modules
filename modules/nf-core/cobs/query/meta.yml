@@ -42,21 +42,15 @@ input:
 
 
 output:
-  - meta:
-      type: map
-      description: |
-        Groovy Map containing sample information
-        e.g. `[ id:'sample1', single_end:false ]`
+  - matches:
+      type: file
+      description: COBS matches
+      pattern: "*.matches.gz"
 
   - versions:
       type: file
       description: File containing software versions
       pattern: "versions.yml"
-
-  - matches:
-      type: file
-      description: COBS matches
-      pattern: "matches.gz"
 
 authors:
   - "@leoisl"
