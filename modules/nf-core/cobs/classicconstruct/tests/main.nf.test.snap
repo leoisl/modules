@@ -1,23 +1,60 @@
 {
-    "versions": {
+    "sarscov2 - genome - fasta": {
         "content": [
-            [
-                "versions.yml:md5,c7f4addaabb22c98031762d886b4e9fa"
-            ]
-        ],
-        "timestamp": "2023-12-09T11:33:36.608968"
-    },
-    "index": {
-        "content": [
-            [
-                [
-                    {
-                        "id": "test"
-                    },
-                    "index.cobs_classic:md5,1745dca38a763f0b6a6e4943d53f8b6a"
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.index.cobs_classic:md5,1745dca38a763f0b6a6e4943d53f8b6a"
+                    ]
+                ],
+                "1": [
+                    "versions.yml:md5,c7f4addaabb22c98031762d886b4e9fa"
+                ],
+                "index": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.index.cobs_classic:md5,1745dca38a763f0b6a6e4943d53f8b6a"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,c7f4addaabb22c98031762d886b4e9fa"
                 ]
-            ]
+            }
         ],
-        "timestamp": "2023-12-06T18:53:19.347747"
+        "timestamp": "2023-12-11T16:54:26.108084"
+    },
+    "sarscov2 - genome - fasta - stub": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.index.cobs_classic:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "1": [
+                    "versions.yml:md5,c7f4addaabb22c98031762d886b4e9fa"
+                ],
+                "index": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.index.cobs_classic:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,c7f4addaabb22c98031762d886b4e9fa"
+                ]
+            }
+        ],
+        "timestamp": "2023-12-11T16:54:33.693174"
     }
 }
