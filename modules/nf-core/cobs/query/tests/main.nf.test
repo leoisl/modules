@@ -8,6 +8,10 @@ nextflow_process {
     tag "modules_nfcore"
     tag "cobs"
     tag "cobs/query"
+    tag "xz/compress"
+    tag "cobs/classicconstruct"
+    tag "pigz/compress"
+    tag "cobs/compactconstruct"
 
     test("sarscov2 - classic - no compression - reads - fastq") {
         setup {

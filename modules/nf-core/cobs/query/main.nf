@@ -32,7 +32,9 @@ process COBS_QUERY {
     def get_index_size_command = ""
     if (index_is_gzip_compressed) {
         decompress_tool = "gzip"
-        get_index_size_command = "index_size=\$(gzip --list $index | tail -n1 | awk '{print \$2}')"
+        // note: unfortunately gzip --list is not available in BusyBox gzip, so we need to decompress it entirely to get the index size
+        // note: this is not ideal and should be optimised in next versions of this module, although I don't know how
+        get_index_size_command = "index_size=\$(gzip -d -c $index | wc -c)"
     } else if (index_is_xz_compressed) {
         decompress_tool = "xz"
         get_index_size_command = "index_size=\$(xz --list --robot $index | grep file | awk '{print \$5}')"
@@ -47,15 +49,13 @@ process COBS_QUERY {
             // streams compressed index to COBS
             command += get_index_size_command
             command += """
-                            echo "index_size=\$index_size"
-
-                            cobs \\
-                                query \\
-                                $args \\
-                                -T $task.cpus \\
-                                -i <(${decompress_tool} -d -c "${index}") \\
-                                -f <(zcat $query) \\
-                                --index-sizes \$index_size \\
+                        cobs \\
+                            query \\
+                            $args \\
+                            -T $task.cpus \\
+                            -i <(${decompress_tool} -d -c "${index}") \\
+                            -f <(zcat $query) \\
+                            --index-sizes \$index_size \\
                        """
         } else {
             // decompresses compressed index to disk and mmap it
@@ -90,17 +90,16 @@ process COBS_QUERY {
                         rm -v "${decompressed_index}"
                    """
     }
-    command +=
-        """
 
-            cat <<-END_VERSIONS > versions.yml
-            "${task.process}":
-                cobs: \$(cobs version 2>&1 | awk '{print \$3}')
-            END_VERSIONS
-        """
+    // note: for some reason the indentation is not stripped in some tests making the versions.yml file invalid
+    // note: thus I am stripping it directly here
+    command += """
+cat <<-END_VERSIONS > versions.yml
+"${task.process}":
+    cobs: \$(cobs version 2>&1 | awk '{print \$3}')
+END_VERSIONS
     """
-    ${command}
-    """
+    command
 
     stub:
     meta = [id: query_meta.id, index_id: index_meta.id]

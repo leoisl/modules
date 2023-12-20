@@ -28,7 +28,7 @@
                 ]
             }
         ],
-        "timestamp": "2023-12-15T19:21:09.244702"
+        "timestamp": "2023-12-20T13:21:48.999199"
     },
     "sarscov2 - classic - no compression - reads - fastq - stub": {
         "content": [
@@ -59,6 +59,6 @@
                 ]
             }
         ],
-        "timestamp": "2023-12-15T19:22:21.13436"
+        "timestamp": "2023-12-20T13:23:10.582602"
     }
 }
