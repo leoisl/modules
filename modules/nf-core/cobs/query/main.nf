@@ -28,12 +28,13 @@ process COBS_QUERY {
     def should_load_the_whole_index_into_RAM = args.contains("--load-complete")
     def index_is_gzip_compressed = index.toString().endsWith(".gz")
     def index_is_xz_compressed = index.toString().endsWith(".xz")
+    def is_compact_and_compressed_index = index.toString().endsWith(".cobs_compact.gz") || index.toString().endsWith(".cobs_compact.xz")
     def decompress_tool = ""
     def get_index_size_command = ""
     if (index_is_gzip_compressed) {
         decompress_tool = "gzip"
-        // note: unfortunately gzip --list is not available in BusyBox gzip, so we need to decompress it entirely to get the index size
-        // note: this is not ideal and should be optimised in next versions of this module, although I don't know how
+        // note: unfortunately "--list" is not available in BusyBox gzip, so we need to decompress the archive entirely to get the index size
+        // note: this is not ideal and should be optimised in next versions of this module, although I don't know how yet
         get_index_size_command = "index_size=\$(gzip -d -c $index | wc -c)"
     } else if (index_is_xz_compressed) {
         decompress_tool = "xz"
@@ -41,12 +42,18 @@ process COBS_QUERY {
     }
     def command = ""
 
+    // input checking
+    if (is_compact_and_compressed_index && should_load_the_whole_index_into_RAM) {
+        error "COBS does not support loading a compact and compressed index directly RAM - please remove --load-complete from the args or use a classic index or decompress the index"
+    }
+
+
     // run COBS
     def decompressed_index = ""
     def should_delete_decompressed_index = false
     if (index_is_gzip_compressed || index_is_xz_compressed) {
         if (should_load_the_whole_index_into_RAM) {
-            // streams compressed index to COBS
+            // streams compressed index to RAM
             command += get_index_size_command
             command += """
                         cobs \\
@@ -105,7 +112,7 @@ END_VERSIONS
     meta = [id: query_meta.id, index_id: index_meta.id]
     def prefix = task.ext.prefix ?: "${query_meta.id}-${index_meta.id}"
     """
-    #  just using touch yields java.io.EOFException when snapshotting the stub output - need to create a valid gzip file
+    # Note: just using touch yields java.io.EOFException when snapshotting the stub output - need to create a valid gzip file
     gzip </dev/null >${prefix}.matches.gz
 
     cat <<-END_VERSIONS > versions.yml
