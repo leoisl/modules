@@ -13,7 +13,7 @@ tools:
       homepage: "https://panthema.net/cobs"
       documentation: "https://github.com/iqbal-lab-org/cobs"
       doi: "10.1007/978-3-030-32686-9_21"
-      licence: ['MIT']
+      licence: ["MIT"]
 
 input:
   - query_meta:
@@ -37,7 +37,6 @@ input:
       type: file
       description: The COBS index
       pattern: "*.{cobs_classic,cobs_classic.gz,cobs_classic.xz,cobs_compact,cobs_compact.gz,cobs_compact.xz}"
-
 
 output:
   - meta:
